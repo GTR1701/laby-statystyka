@@ -21,7 +21,8 @@ str(dataFrame)
 
 # d)
 print("Średnia ocena z analizy")
-mean(dataFrame$Analiza)
+print(mean(dataFrame$Analiza))
+
 
 #e)
 
@@ -36,6 +37,8 @@ print("Wyniki wszystkich kobiet")
 kobiety <- dataFrame[dataFrame$Plec == "k", ]
 print(kobiety)
 
+print("Srednia ocen kobiet")
+print(mean(kobiety$Srednia))
 # g)
 
 print("Wyniki studentów z oceną co najmniej 4.5")
@@ -59,7 +62,7 @@ wagaDF <- data.frame(waga1)
 # b)
 
 print("Pierwsze pięc wierszy")
-print(wagaDF[1:5,])
+print(wagaDF[1:5, ])
 
 # c)
 print("Opis struktury ramy")
@@ -76,7 +79,7 @@ mean(wagaDF$Waga_przed)
 # e)
 
 print("Nowa kolumna z wskaźnikiem wagi")
-wagaDF$Wskaźnik <- wagaDF$Waga_przed / (wagaDF$Wzrost/100)^2
+wagaDF$Wskaźnik <- wagaDF$Waga_przed / (wagaDF$Wzrost / 100)^2
 
 print(wagaDF)
 
@@ -85,6 +88,9 @@ print(wagaDF)
 print("Kobiety z wskaźnikiem wagi powyżej 25")
 kobiety <- wagaDF[wagaDF$plec == "1" & wagaDF$Wskaźnik > 25, ]
 print(kobiety)
+
+mezczyzni20 <- wagaDF[wagaDF$plec == "0" & wagaDF$Wskaźnik < 20, ]
+print(mezczyzni20)
 
 # g)
 
@@ -145,3 +151,6 @@ print(srodmiescie)
 
 print("Mieszkania o metrażu większym niż 60m2 oraz o cenie poniżej 350 000PLN")
 print(nrow(mieszkania[mieszkania$Metraz > 60 & mieszkania$Cena < 350000, ]))
+
+srodmiesciePietro <- mieszkania[mieszkania$Dzielnica == "Srodmiescie" & mieszkania$Pietro < 2 & mieszkania$Cena_m2 < 5000, ]
+print(srodmiesciePietro)
