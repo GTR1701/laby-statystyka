@@ -37,8 +37,8 @@ print(paste("t taki, że P(T > t) = 0.2:", t))
 
 # Narysować wykres gęstości zmiennej T na przedziale 0 ≤ t ≤ 3
 t_values <- seq(0, 3, by = 0.01)
-density_T <- dexp(t_values, rate = lambda)
-plot(t_values, density_T, type = "l", main = "Gęstość zmiennej T", xlab = "t", ylab = "g(t)")
+gestosc_T <- dexp(t_values, rate = lambda)
+# plot(t_values, gestosc_T, type = "l", main = "Gęstość zmiennej T", xlab = "t", ylab = "g(t)")
 
 # Czas do pierwszej usterki ma rozkład wykładniczy z parametrem intensywności 1 / 3
 lambda2 <- 1 / 3
@@ -78,4 +78,4 @@ print(paste("P(155 < X < 190):", p12))
 # Narysować wykres gęstości zmiennej X na przedziale 130 ≤ x ≤ 210
 x_values <- seq(130, 210, by = 0.01)
 density_X <- dnorm(x_values, mean = mean_X, sd = sd_X)
-# plot(x_values, density_X, type = "l", main = "Gęstość zmiennej X", xlab = "x", ylab = "g(x)")
+plot(x_values, density_X, type = "l", main = "Gęstość zmiennej X", xlab = "x", ylab = "g(x)")
