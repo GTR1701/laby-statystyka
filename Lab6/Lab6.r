@@ -6,6 +6,10 @@ colnames(joint_prob) <- c("Y=0", "Y=1", "Y=2")
 # Wyznaczenie rozkładów brzegowych
 marginal_X <- rowSums(joint_prob) # Rozkład brzegowy X
 marginal_Y <- colSums(joint_prob) # Rozkład brzegowy Y
+print("Rozkład brzegowy X:")
+print(marginal_X)
+print("Rozkład brzegowy Y:")
+print(marginal_Y)
 
 # Wyznaczenie współczynnika korelacji ρ(X,Y)
 x_values <- c(0, 1)
@@ -19,13 +23,21 @@ expected_Y <- sum(y_values * marginal_Y)
 var_X <- sum((x_values ^ 2) * marginal_X) - expected_X ^ 2
 var_Y <- sum((y_values ^ 2) * marginal_Y) - expected_Y ^ 2
 correlation <- (expected_XY - expected_X * expected_Y) / sqrt(var_X * var_Y)
+print("Współczynnik korelacji ρ(X, Y):")
+print(correlation)
 
 # Wyznaczenie rozkładów warunkowych P(Y=y|X=x)
 conditional_Y_given_X0 <- joint_prob[1,] / marginal_X[1]
 conditional_Y_given_X1 <- joint_prob[2,] / marginal_X[2]
+print("Rozkład warunkowy P(Y|X=0):")
+print(conditional_Y_given_X0)
+print("Rozkład warunkowy P(Y|X=1):")
+print(conditional_Y_given_X1)
 
 # Sprawdzenie niezależności zmiennych X i Y
 independence_check <- all.equal(joint_prob, outer(marginal_X, marginal_Y))
+print("Czy zmienne X i Y są niezależne?")
+print(independence_check)
 
 # Symulacja 1000 par realizacji metodą skumulowanych prawdopodobieństw
 set.seed(123) # Ustawienie ziarna dla powtarzalności
@@ -39,9 +51,15 @@ simulated_Y <- y_vector[simulated_indices]
 pearson_corr <- cor(simulated_X, simulated_Y, method = "pearson")
 spearman_corr <- cor(simulated_X, simulated_Y, method = "spearman")
 kendall_corr <- cor(simulated_X, simulated_Y, method = "kendall")
+print("Współczynniki korelacji na podstawie danych symulowanych:")
+print(paste("Pearson:", pearson_corr))
+print(paste("Spearman:", spearman_corr))
+print(paste("Kendall:", kendall_corr))
 
 # Tablica rozdzielcza relatywnych frekwencji
 freq_table <- table(simulated_X, simulated_Y) / 1000
+print("Tablica rozdzielcza relatywnych frekwencji dla danych symulowanych:")
+print(freq_table)
 
 # Drugi rozkład (oceny z Algebry i Analizy)
 grades_joint_prob <- matrix(
@@ -59,6 +77,10 @@ colnames(grades_joint_prob) <- c("Y=2", "Y=3", "Y=3.5", "Y=4", "Y=4.5", "Y=5")
 # Analogiczne kroki jak dla pierwszego rozkładu
 grades_marginal_X <- rowSums(grades_joint_prob)
 grades_marginal_Y <- colSums(grades_joint_prob)
+print("Rozkład brzegowy ocen (X):")
+print(grades_marginal_X)
+print("Rozkład brzegowy ocen (Y):")
+print(grades_marginal_Y)
 
 # Symulacja 1000 par realizacji dla drugiego rozkładu
 set.seed(123)
@@ -73,8 +95,14 @@ simulated_Y_grades <- rep(y_values_grades, times = length(x_values_grades))[simu
 
 # Tablica rozdzielcza relatywnych frekwencji dla drugiego rozkładu
 freq_table_grades <- table(simulated_X_grades, simulated_Y_grades) / 1000
+print("Tablica rozdzielcza relatywnych frekwencji dla ocen:")
+print(freq_table_grades)
 
 # Współczynniki korelacji dla drugiego rozkładu
 pearson_corr_grades <- cor(simulated_X_grades, simulated_Y_grades, method = "pearson")
 spearman_corr_grades <- cor(simulated_X_grades, simulated_Y_grades, method = "spearman")
 kendall_corr_grades <- cor(simulated_X_grades, simulated_Y_grades, method = "kendall")
+print("Współczynniki korelacji dla ocen:")
+print(paste("Pearson:", pearson_corr_grades))
+print(paste("Spearman:", spearman_corr_grades))
+print(paste("Kendall:", kendall_corr_grades))
