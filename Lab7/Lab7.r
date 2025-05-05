@@ -118,7 +118,7 @@ for (n in n_values) {
 }
 
 # Zadanie 5: Rozkład dwumianowy
-set.seed(123)
+set.seed(1234)
 binomial_cases <- list(
   list(n = 30, p = 0.5),
   list(n = 1000, p = 0.5),
@@ -136,9 +136,9 @@ for (case in binomial_cases) {
   rel_freq <- table(factor(realizations, levels = x_vals)) / length(realizations)
 
   # Histogram dla rozkładu dwumianowego
-  barplot(rel_freq,
-    col = "lightblue", main = paste("Histogram Bin(n =", n, ", p =", p, ")"),
+  bar_centers <- barplot(rel_freq,
+    names.arg = x_vals, col = "lightblue", main = paste("Histogram Bin(n =", n, ", p =", p, ")"),
     xlab = "x", ylab = "Relatywna frekwencja"
   )
-  lines(x_vals, dnorm(x_vals, mean = mean_bin, sd = sd_bin), col = "red", lwd = 2)
+  lines(bar_centers, dnorm(x_vals, mean = mean_bin, sd = sd_bin), col = "red", lwd = 2)
 }
