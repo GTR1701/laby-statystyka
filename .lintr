@@ -1,0 +1,16 @@
+linters: linters_with_defaults() # see vignette("lintr")
+encoding: "UTF-8"
+#disable all linters
+linters: list(
+  line_length_linter(200),
+  object_name_linter(styles = "snake_case"),
+  object_length_linter(30),
+  single_quotes_linter(),
+  closed_curly_linter(),
+  closed_parentheses_linter(),
+  closed_braces_linter(),
+  closed_comment_linter(),
+  closed_string_linter(),
+  no_tab_linter(),
+  no_blank_lines_linter()
+)
