@@ -59,9 +59,72 @@ cat("Wartość p:", p_value_z_height, "\n\n")
 t_test_height <- t.test(waga1$Wzrost, mu = mean_h0_height)
 
 cat("Test t dla średniego wzrostu studentów:\n")
-print(t_test_height)
 
 # Interpretacja wyniku testu t
 interpretuj_test_t(t_test_height$p.value)
 
-# Analogicznie należy postąpić dla pozostałych zadań, zmieniając odpowiednie wartości hipotez i dane wejściowe.
+# Obliczenie przyrostu wagi
+waga1$Przyrost_wagi <- waga1$Waga_po - waga1$Waga_przed
+
+# Zadanie 4: Testy dla średniego przyrostu wagi o 2kg (wszyscy studenci)
+mean_h0_weight_all <- 2
+mean_sample_weight_all <- mean(waga1$Przyrost_wagi)
+sd_sample_weight_all <- sd(waga1$Przyrost_wagi)
+n_weight_all <- length(waga1$Przyrost_wagi)
+
+# Test Z
+z_stat_weight_all <- (mean_sample_weight_all - mean_h0_weight_all) / (sd_sample_weight_all / sqrt(n_weight_all))
+p_value_z_weight_all <- 2 * (1 - pnorm(abs(z_stat_weight_all)))
+
+cat("Test Z dla średniego przyrostu wagi (wszyscy studenci):\n")
+cat("Statystyka Z:", z_stat_weight_all, "\n")
+cat("Wartość p:", p_value_z_weight_all, "\n")
+cat("Porównanie z wartością krytyczną (1.96 dla alfa=0.05):", ifelse(abs(z_stat_weight_all) > 1.96, "Odrzucamy H0", "Nie odrzucamy H0"), "\n\n")
+
+# Test t
+t_stat_weight_all <- (mean_sample_weight_all - mean_h0_weight_all) / (sd_sample_weight_all / sqrt(n_weight_all))
+df_weight_all <- n_weight_all - 1
+p_value_t_weight_all <- 2 * (1 - pt(abs(t_stat_weight_all), df_weight_all))
+
+cat("Test t dla średniego przyrostu wagi (wszyscy studenci):\n")
+cat("Statystyka t:", t_stat_weight_all, "\n")
+cat("Wartość p:", p_value_t_weight_all, "\n")
+cat("Porównanie z wartością krytyczną (dla alfa=0.05):", ifelse(abs(t_stat_weight_all) > qt(0.975, df_weight_all), "Odrzucamy H0", "Nie odrzucamy H0"), "\n\n")
+
+# Test t za pomocą funkcji t.test
+t_test_weight_all <- t.test(waga1$Przyrost_wagi, mu = mean_h0_weight_all)
+
+cat("Test t (t.test) dla średniego przyrostu wagi (wszyscy studenci):\n")
+interpretuj_test_t(t_test_weight_all$p.value)
+
+# Zadanie 5: Testy dla średniego przyrostu wagi o 4kg (studenci męscy)
+waga_male <- subset(waga1, plec == "0")
+mean_h0_weight_male <- 4
+mean_sample_weight_male <- mean(waga_male$Przyrost_wagi)
+sd_sample_weight_male <- sd(waga_male$Przyrost_wagi)
+n_weight_male <- length(waga_male$Przyrost_wagi)
+
+# Test Z
+z_stat_weight_male <- (mean_sample_weight_male - mean_h0_weight_male) / (sd_sample_weight_male / sqrt(n_weight_male))
+p_value_z_weight_male <- 2 * (1 - pnorm(abs(z_stat_weight_male)))
+
+cat("Test Z dla średniego przyrostu wagi (studenci męscy):\n")
+cat("Statystyka Z:", z_stat_weight_male, "\n")
+cat("Wartość p:", p_value_z_weight_male, "\n")
+cat("Porównanie z wartością krytyczną (1.96 dla alfa=0.05):", ifelse(abs(z_stat_weight_male) > 1.96, "Odrzucamy H0", "Nie odrzucamy H0"), "\n\n")
+
+# Test t
+t_stat_weight_male <- (mean_sample_weight_male - mean_h0_weight_male) / (sd_sample_weight_male / sqrt(n_weight_male))
+df_weight_male <- n_weight_male - 1
+p_value_t_weight_male <- 2 * (1 - pt(abs(t_stat_weight_male), df_weight_male))
+
+cat("Test t dla średniego przyrostu wagi (studenci męscy):\n")
+cat("Statystyka t:", t_stat_weight_male, "\n")
+cat("Wartość p:", p_value_t_weight_male, "\n")
+cat("Porównanie z wartością krytyczną (dla alfa=0.05):", ifelse(abs(t_stat_weight_male) > qt(0.975, df_weight_male), "Odrzucamy H0", "Nie odrzucamy H0"), "\n\n")
+
+# Test t za pomocą funkcji t.test
+t_test_weight_male <- t.test(waga_male$Przyrost_wagi, mu = mean_h0_weight_male)
+
+cat("Test t (t.test) dla średniego przyrostu wagi (studenci męscy):\n")
+interpretuj_test_t(t_test_weight_male$p.value)
