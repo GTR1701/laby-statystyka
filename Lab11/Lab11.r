@@ -25,6 +25,20 @@ if (p_value < 0.05) {
 test <- chisq.test(wyniki, p = rep(1 / 6, 6))
 print(test)
 
+cat("Interpretacja: ")
+if (p_value < 0.05) {
+  cat("Odrzucamy hipotezę o symetryczności kostki (istotna różnica).\n")
+} else {
+  cat("Brak podstaw do odrzucenia hipotezy o symetryczności kostki.\n")
+}
+
+cat("Interpretacja (test wbudowany): ")
+if (test$p.value < 0.05) {
+  cat("Odrzucamy hipotezę o symetryczności kostki (test wbudowany).\n")
+} else {
+  cat("Brak podstaw do odrzucenia hipotezy o symetryczności kostki (test wbudowany).\n")
+}
+
 # 2. Tablica wykształcenie vs płeć
 tablica <- matrix(c(200, 300, 150, 350), nrow = 2, byrow = TRUE)
 colnames(tablica) <- c("Wyższe", "Średnie")
@@ -58,9 +72,26 @@ if (p_value < 0.05) {
 test_chi <- chisq.test(tablica, correct = FALSE)
 print(test_chi)
 
-# f) Test Fishera
-test_fisher <- fisher.test(tablica)
-print(test_fisher)
+cat("Interpretacja: ")
+if (p_value < 0.05) {
+  cat("Odrzucamy hipotezę o niezależności (istnieje zależność między płcią a wykształceniem).\n")
+} else {
+  cat("Brak podstaw do odrzucenia hipotezy o niezależności.\n")
+}
+
+cat("Interpretacja (test wbudowany): ")
+if (test_chi$p.value < 0.05) {
+  cat("Odrzucamy hipotezę o niezależności (test wbudowany).\n")
+} else {
+  cat("Brak podstaw do odrzucenia hipotezy o niezależności (test wbudowany).\n")
+}
+
+cat("Interpretacja (test Fishera): ")
+if (test_fisher$p.value < 0.05) {
+  cat("Odrzucamy hipotezę o niezależności (test Fishera).\n")
+} else {
+  cat("Brak podstaw do odrzucenia hipotezy o niezależności (test Fishera).\n")
+}
 
 # 3. Import danych z pliku mieszkania.csv
 # Zakładam, że plik mieszkania.csv znajduje się w folderze Lab11
@@ -80,6 +111,13 @@ print(tabela_pokoje_4plus)
 test_chi_pokoje <- chisq.test(tabela_pokoje_4plus)
 print(test_chi_pokoje)
 
+cat("Interpretacja: ")
+if (test_chi_pokoje$p.value < 0.05) {
+  cat("Odrzucamy hipotezę o niezależności liczby pokoi od dzielnicy.\n")
+} else {
+  cat("Brak podstaw do odrzucenia hipotezy o niezależności liczby pokoi od dzielnicy.\n")
+}
+
 # 4. Analiza ceny za m2 względem dzielnicy
 
 # a) Zmienna: czy cena za m2 > 6000 zł
@@ -95,6 +133,13 @@ print(tabela_cena_dzielnica)
 test_chi_cena <- chisq.test(tabela_cena_dzielnica)
 print(test_chi_cena)
 
+cat("Interpretacja: ")
+if (test_chi_cena$p.value < 0.05) {
+  cat("Odrzucamy hipotezę o niezależności ceny za m2 od dzielnicy.\n")
+} else {
+  cat("Brak podstaw do odrzucenia hipotezy o niezależności ceny za m2 od dzielnicy.\n")
+}
+
 # 5. Testowanie normalności i estymacja gęstości
 
 # a) Test normalności dla ceny za m2
@@ -102,7 +147,7 @@ shapiro_test_cena <- shapiro.test(mieszkania$cena_m2)
 print(shapiro_test_cena)
 
 # Wykres estymatora gęstości dla ceny za m2
-plot(density(mieszkania$cena_m2), main = "Estymator gęstości: cena za m2", xlab = "Cena za m2")
+# plot(density(mieszkania$cena_m2), main = "Estymator gęstości: cena za m2", xlab = "Cena za m2")
 
 # b) Test normalności dla metrażu mieszkań w Śródmieściu
 metraz_srodmiescie <- mieszkania$Metraz[mieszkania$Dzielnica == "Srodmiescie"]
@@ -110,7 +155,21 @@ shapiro_test_metraz <- shapiro.test(metraz_srodmiescie)
 print(shapiro_test_metraz)
 
 # Wykres estymatora gęstości dla metrażu w Śródmieściu
-plot(density(metraz_srodmiescie), main = "Estymator gęstości: metraż w Śródmieściu", xlab = "Metraż")
+# plot(density(metraz_srodmiescie), main = "Estymator gęstości: metraż w Śródmieściu", xlab = "Metraż")
+
+cat("Interpretacja: ")
+if (shapiro_test_cena$p.value < 0.05) {
+  cat("Odrzucamy hipotezę o normalności rozkładu ceny za m2.\n")
+} else {
+  cat("Brak podstaw do odrzucenia hipotezy o normalności rozkładu ceny za m2.\n")
+}
+
+cat("Interpretacja: ")
+if (shapiro_test_metraz$p.value < 0.05) {
+  cat("Odrzucamy hipotezę o normalności rozkładu metrażu w Śródmieściu.\n")
+} else {
+  cat("Brak podstaw do odrzucenia hipotezy o normalności rozkładu metrażu w Śródmieściu.\n")
+}
 
 # 6. Centralne twierdzenie graniczne i testy rozkładów
 
@@ -131,6 +190,20 @@ curve(dnorm(x, mean = 1, sd = 1), col = "blue", add = TRUE)
 ks_test_exp <- ks.test(proba_exp, "pexp", rate = 1)
 print(ks_test_exp)
 
+cat("Interpretacja: ")
+if (shapiro_test_exp_norm$p.value < 0.05) {
+  cat("Odrzucamy hipotezę o normalności rozkładu próbki wykładniczej.\n")
+} else {
+  cat("Brak podstaw do odrzucenia hipotezy o normalności rozkładu próbki wykładniczej.\n")
+}
+
+cat("Interpretacja: ")
+if (ks_test_exp$p.value < 0.05) {
+  cat("Odrzucamy hipotezę zgodności z rozkładem wykładniczym Exp(1).\n")
+} else {
+  cat("Brak podstaw do odrzucenia hipotezy zgodności z rozkładem wykładniczym Exp(1).\n")
+}
+
 # c) Próbka z rozkładu Gamma(k=100, scale=1)
 proba_gamma <- rgamma(1000, shape = 100, scale = 1)
 
@@ -140,9 +213,23 @@ shapiro_test_gamma_norm <- shapiro.test(proba_gamma)
 print(shapiro_test_gamma_norm)
 
 # Porównanie z rozkładem normalnym N(100,10) - wykres
-hist(proba_gamma, probability = TRUE, breaks = 30, main = "Gamma(100,1) vs N(100,10)")
-curve(dnorm(x, mean = 100, sd = 10), col = "blue", add = TRUE)
+# hist(proba_gamma, probability = TRUE, breaks = 30, main = "Gamma(100,1) vs N(100,10)")
+# curve(dnorm(x, mean = 100, sd = 10), col = "blue", add = TRUE)
 
 # ii) Test zgodności z rozkładem Gamma(100,1) (test Kolmogorova-Smirnova)
 ks_test_gamma <- ks.test(proba_gamma, "pgamma", shape = 100, scale = 1)
 print(ks_test_gamma)
+
+cat("Interpretacja: ")
+if (shapiro_test_gamma_norm$p.value < 0.05) {
+  cat("Odrzucamy hipotezę o normalności rozkładu próbki gamma.\n")
+} else {
+  cat("Brak podstaw do odrzucenia hipotezy o normalności rozkładu próbki gamma.\n")
+}
+
+cat("Interpretacja: ")
+if (ks_test_gamma$p.value < 0.05) {
+  cat("Odrzucamy hipotezę zgodności z rozkładem gamma.\n")
+} else {
+  cat("Brak podstaw do odrzucenia hipotezy zgodności z rozkładem gamma.\n")
+}
